@@ -1,0 +1,62 @@
+networks:
+  default:
+    driver: bridge
+    name: roboshop # Use a custom name
+    external: true # it indicated a custom network already created in your docker server. SO Compose doesn't attempt to create these networks, and returns an error if one doesn't exist.
+services:
+  mongodb:
+    image: maha110/mongodb:v1
+    container_name: mongodb
+  catalogue:
+    image: maha110/catalogue:v1
+    container_name: catalogue
+    depends_on:
+    - mongodb
+  redis:
+    image: maha110/redis:v1
+    container_name: redis
+  user:
+    image: maha110/user:v1
+    container_name: user
+    depends_on:
+    - redis
+    - mongodb
+  cart:
+    image: maha110/cart:v1
+    container_name: cart
+    depends_on:
+    - redis
+    - catalogue
+  mysql:
+    image: maha110/mysql:v1
+    container_name: mysql
+  shipping:
+    image: maha110/shipping:v1
+    container_name: shipping
+    depends_on:
+    - mysql
+    - cart
+  rabbitmq:
+    image: maha110/rabbitmq:3
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: roboshop
+      RABBITMQ_DEFAULT_PASS: roboshop123
+  payment:
+    image: maha110/payment:v1
+    container_name: payment
+    depends_on:
+    - rabbitmq
+    - cart
+    - user
+  frontend:
+    image: maha110/frontend:v1
+    container_name: frontend
+    ports:
+    - "80:80"
+    depends_on:
+    - catalogue
+    - user
+    - cart
+    - shipping
+    - payment
