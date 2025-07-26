@@ -3,10 +3,18 @@ networks:
     driver: bridge
     name: roboshop # Use a custom name
     external: true # it indicated a custom network already created in your docker server. SO Compose doesn't attempt to create these networks, and returns an error if one doesn't exist.
+volumes:
+  mongodb: # -> this is equivalent to docker volume create mongodb
+  redis:
+  mysql:
+  rabbitmq:
 services:
   mongodb:
     image: maha110/mongodb:v1
     container_name: mongodb
+    volumes:
+      - mongodb:/data/db  
+# the above mongodb service block is equivalent to docker run -d --name mongodb --network roboshop -v mongodb:/data/db maha110/mongodb:v1
   catalogue:
     image: maha110/catalogue:v1
     container_name: catalogue
@@ -15,6 +23,8 @@ services:
   redis:
     image: maha110/redis:v1
     container_name: redis
+    volumes:
+      - redis:/data
   user:
     image: maha110/user:v1
     container_name: user
@@ -30,6 +40,8 @@ services:
   mysql:
     image: maha110/mysql:v1
     container_name: mysql
+    volumes:
+      - mysql:/var/lib/mysql
   shipping:
     image: maha110/shipping:v1
     container_name: shipping
@@ -42,6 +54,8 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
   payment:
     image: maha110/payment:v1
     container_name: payment
@@ -60,3 +74,8 @@ services:
     - cart
     - shipping
     - payment
+
+
+#better practise is to declare env variables also in docker compose but not directly in image.
+#because if you want to change any env variable u should rebuild image if they are declared in images. instead if u declare them in compose u no need to rebuild images if nay change in env variables.
+
