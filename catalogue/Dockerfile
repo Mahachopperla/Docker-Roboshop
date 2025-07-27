@@ -12,8 +12,6 @@ USER roboshop
 WORKDIR /opt/server
 COPY --from=builder --chown=roboshop:roboshop /opt/server /opt/server  
 #we are copying build files fromprevious stage and making roboshop system user as owner of the folder
-ENV MONGO="true" \
-    MONGO_URL="mongodb://mongodb:27017/catalogue"
 CMD ["node","server.js"]
 
 
