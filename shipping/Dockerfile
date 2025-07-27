@@ -1,6 +1,7 @@
 #unlike nodejs , injava we have 2 different environements to build and run code.
 # for building code we use java development kit tools whihc are maven etc.
 #and for running code we use jre-> java runtime environment
+#u can directly search in google as jre alpine image u will get latest version
 #so in builder we use build time tool maven and while running we used jre
 
 FROM maven AS builder
