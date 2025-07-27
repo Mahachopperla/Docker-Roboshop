@@ -10,7 +10,8 @@ FROM node:20-alpine3.21
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 USER roboshop
 WORKDIR /opt/server
-COPY --from=builder /opt/server /opt/server
+COPY --from=builder --chown=roboshop:roboshop /opt/server /opt/server  
+#we are copying build files fromprevious stage and making roboshop system user as owner of the folder
 ENV MONGO="true" \
     MONGO_URL="mongodb://mongodb:27017/catalogue"
 CMD ["node","server.js"]
