@@ -1,9 +1,4 @@
-# frontend is developed in nginx and nginx application is system application . not our customised application.
 
-# so we need to give some set of permissions to nginx 
-
-# -> search in google as - nginx as non-root container
-# 	nginx is system package so there will be many limitations.
 
 FROM nginx:1.29.0-alpine
 RUN rm /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf

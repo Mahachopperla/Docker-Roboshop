@@ -24,7 +24,7 @@ COPY --chown=roboshop:roboshop *.py .
 CMD ["uwsgi", "--ini", "payment.ini"]
 
 
-#note for better understanding refer notes
+
 
 
 

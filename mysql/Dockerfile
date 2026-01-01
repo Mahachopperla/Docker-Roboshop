@@ -12,7 +12,5 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-#copying entrypoint script to specific path in pod
-#giving execute permission
-# and passing this as entrypoint to container
+
 

@@ -98,6 +98,3 @@ services:
     - payment
 
 
-#better practise is to declare env variables also in docker compose but not directly in image.
-#because if you want to change any env variable u should rebuild image if they are declared in images. instead if u declare them in compose u no need to rebuild images if nay change in env variables.
-
